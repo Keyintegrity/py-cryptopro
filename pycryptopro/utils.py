@@ -1,5 +1,7 @@
 # coding: utf-8
-
+from __future__ import unicode_literals
+from future.builtins import object
+from future.utils import iteritems
 import re
 import os
 
@@ -22,7 +24,7 @@ class ShellCommand(object):
         Выполняет комманду shell
         """
         params = ' '.join(args)
-        named_params = ' '.join(['-%s %s' % (k, v) for k, v in kwargs.items() if v is not None])
+        named_params = ' '.join(['-%s %s' % (k, v) for k, v in iteritems(kwargs) if v is not None])
         cmd = ' '.join([self.binary, command, params, named_params])
         proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 
