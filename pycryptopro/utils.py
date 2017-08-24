@@ -27,8 +27,10 @@ class ShellCommand(object):
         named_params = ' '.join(['-%s %s' % (k, v) for k, v in iteritems(kwargs) if v is not None])
         cmd = ' '.join([self.binary, command, params, named_params])
         proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
-
-        return self._parse_response(*proc.communicate())
+        stdout, stderr = proc.communicate()
+        stdout = stdout.decode('utf-8')
+        stderr = stderr.decode('utf-8')
+        return self._parse_response(stdout, stderr)
 
     def _parse_response(self, stdout, stderr):
         if stderr:
