@@ -1,7 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 from future.builtins import object
-from future.utils import iteritems
+from future.utils import iteritems, python_2_unicode_compatible, native_str
 import re
 import os
 
@@ -139,6 +139,7 @@ class Certmgr(ShellCommand):
         return cert
 
 
+@python_2_unicode_compatible
 class PersonalInfo(object):
     def __init__(self, line):
         self.line = line
@@ -160,8 +161,11 @@ class PersonalInfo(object):
                 pass
         return data
 
-    def __repr__(self):
+    def __str__(self):
         return self.as_string()
+
+    def __repr__(self):
+        return native_str(self)
 
 
 class Certificate(object):
