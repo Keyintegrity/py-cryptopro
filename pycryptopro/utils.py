@@ -28,8 +28,8 @@ class ShellCommand(object):
         cmd = ' '.join([self.binary, command, params, named_params])
         proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
         stdout, stderr = proc.communicate()
-        stdout = stdout.decode('utf-8')
-        stderr = stderr.decode('utf-8')
+        stdout = stdout.decode('utf-8', errors='replace')
+        stderr = stderr.decode('utf-8', errors='replace')
         return self._parse_response(stdout, stderr)
 
     def _parse_response(self, stdout, stderr):
